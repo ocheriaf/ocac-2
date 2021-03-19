@@ -1,0 +1,6 @@
+FastAPI[all]
+fastapi_camelcase
+sqlalchemy
+fastapi-users[sqlalchemy]
+psycopg2
+databases[postgresql]

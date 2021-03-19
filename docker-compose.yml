@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  api:
+    build:
+      context: ./ocac-api
+    command: python main.py
+    volumes:
+    - ./ocac-api:/usr/app
+    ports:
+    - "5000:5000"
+    environment:
+      RELOAD: 1
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+  front:
+    build:
+      context: ./ocac-front-vue
+      dockerfile: Dockerfile-dev
+    command: npm run serve
+    volumes:
+    - ./ocac-front-vue:/usr/app
+    - /usr/app/node_modules
+    ports:
+    - "8081:8080"
+    environment:
+      VUE_APP_API_URL: "http://localhost:5000"
+      CHOKIDAR_USEPOLLING: "true"
+
